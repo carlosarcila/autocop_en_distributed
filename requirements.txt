@@ -1,0 +1,82 @@
+
+
+
+
+kafka-python==1.3.3
+tweepy==3.5.0
+configparser
+nltk==3.2.2
+findspark=1.1.0
+
+
+Para activar el entorno de anaconda de Python 3.5, en terminal
+source activate py35
+luego abrir python
+
+
+en cd kafka
+
+./bin//zookeeper-server-start.sh config/zookeeper.properties
+./bin/kafka-server-start.sh config/server.properties
+
+
+en cd mongodb/bin
+
+mongod
+mongo
+
+#Para crear database twitter:
+use twitter
+
+#Para crear colección tests
+db.createCollection(“tests”)
+
+
+#Al final para borrar las colecciones
+use twitter
+db.tweets.drop()
+db.labels.drop()
+
+##comandos en mongo
+show collections
+show databases
+
+db.tweets.count()
+db.tweets.find()
+
+#Para exportar la colección, en cd mongodb/bin desde la terminal:
+$ ./mongoexport -d twitter -c tweets -o tweets.csv
+o también en Json 
+$ ./mongoexport -d twitter -c tweets -o tweets.json
+
+
+#Para crear los archivos necesarios de mongo… En la raíz de C:
+sudo mkdir -p /data/db
+sudo chmod 777 /data
+sudo chmod 777 /data/db
+
+
+—
+Para cambiar el hashtag:
+-Cambiar el parámetro en el Producer twitter_parameters = {
+    "hashtag": ["#Trump"]
+}
+-Si se quieren leer los mensajes del producer desde la terminal, cambiar el nombre del topic
+./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic Trump --from-beginning --zookeeper 192.168.0.11:2181 where Trump is the topic to be read
+
+-Cambiar el nombre del “Topic” en el Consumer
+kafka_configuration_params = {
+    "topic": ["Trump"],
+    "connectionstring": "localhost:9092"
+}
+
+
+
+
+—
+
+Apuntar donde esta el servidor de base de datos en el cosnsumer
+si es local: localhost:
+si es en Aamazon la IP de la máquina
+
+mongodb://52.57.137
